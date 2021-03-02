@@ -1,4 +1,4 @@
-const { Mosel, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create user model
@@ -26,13 +26,11 @@ User.init(
                 isEmail: true
             }
         },
-        {
-            password: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                validate: {
-                    len: [4] // password must be more than four characters long
-                }
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [4] // password must be more than four characters long
             }
         }
     },
