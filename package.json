@@ -4,9 +4,10 @@
   "description": "",
   "main": "\u001b[D\u001b[D\u001b[D\u001bserver.js)",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js"
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bluesatyr/just-tech-news.git"
@@ -26,5 +27,8 @@
     "express-session": "^1.17.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
