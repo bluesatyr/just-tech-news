@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Post, User, Vote, Comment } = require("../../models");
 const { route } = require('./user-routes');
 const sequelize = require('../../config/connection');
+const withAuth = require('../utils/auth');
 
 // GET /api/posts/  -get all posts
 router.get('/', (req, res) => {
@@ -71,11 +72,11 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/posts/ - create a post
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     Post.create({
         title: req.body.title,
         post_url: req.body.post_url,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
       .then(dbPostData => res.json(dbPostData))
       .catch(err => {
@@ -87,7 +88,7 @@ router.post('/', (req, res) => {
 
 // PUT /api/posts/upvote - vote on a post 
 // (declare before :id or express will think upvote is a param)
-router.put('/upvote', (req, res) => {
+router.put('/upvote', withAuth, (req, res) => {
     // make sure the session exists first
     if (req.session) {
       // pass session id along with all destructured properties on req.body
@@ -102,7 +103,7 @@ router.put('/upvote', (req, res) => {
   
 
 // PUT /api/posts/:id - update a post
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
             title: req.body.title
@@ -127,7 +128,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE /api/posts/:id - delete a post
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Post.destroy({
         where: {
             id: req.params.id
